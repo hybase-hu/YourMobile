@@ -1,0 +1,50 @@
+﻿@page
+@model YourMobile.Pages.Home.IndexModel
+@{
+	ViewData["Title"] = "Home";
+}
+
+
+<div class="container-fluid">
+
+	<div class="row">
+		@if (Model.ProductsWithPhotosList.Count == 0)
+		{
+			<div class="alert alert-info">Sorry, no product this</div>
+		}
+		else{
+			@foreach(var productWP in Model.ProductsWithPhotosList)
+			{
+				<div class="col-lg-4 d-flex pb-2 ">
+					<div class="card w-100">
+						<div class="card-img-bottom"><img style="width:100%;object-fit:cover;height:300px;" src="@productWP.Photos.FirstOrDefault().imageUrl" /></div>
+					
+						<div class="card-body">
+							<div class="container"><h7>@productWP.Product.Manifacturer</h7></div>
+							<div class="container"><h4>@productWP.Product.ProductName</h4></div>
+							<div class="container"><h6>@productWP.Product.Price.ToString("N0") HUF</h6></div>
+						
+							<hr>
+								<a class="btn btn-outline-dark w-100 mb-1" asp-page="Details" asp-route-productId="@productWP.Product.Id">Details</a>
+							
+								@if(productWP.Product.SumCount < 1)
+								{
+								<button class="btn btn-dark w-100 mb-1" disabled>SOLD OUT</button>
+								}
+								else{
+
+								<form method="post">
+									<button class="btn btn-secondary w-100 text-dark" asp-page="/Cart/Index" asp-route-productId="@productWP.Product.Id">Add to cart</button>
+								</form>
+								}
+							
+						</div>
+					
+					</div>
+				</div>
+			}
+		}
+
+
+	</div>
+</div>

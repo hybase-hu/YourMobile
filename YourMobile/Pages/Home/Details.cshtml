@@ -1,0 +1,62 @@
+﻿@page
+@model YourMobile.Pages.Home.DetailsModel
+@{
+    ViewData["Title"] = Model.ProductsWP.Product.ProductName;
+}
+
+<div class="card py-2">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="row">
+					<div class="col-lg">
+						@if (@Model.ProductsWP.Photos.FirstOrDefault() != null)
+						{
+							<img src="\@Model.ProductsWP.Photos.FirstOrDefault().imageUrl" style="width:100%;object-fit:cover;height:100%"  />
+						}
+						else
+						{
+							<img src="\img\page\no-image.png" style="width:100%;object-fit:cover;height:100%" />
+
+						}
+					</div>
+				</div>
+
+				<div class="row">
+					@foreach(var image in Model.ProductsWP.Photos)
+					{
+						<div class="col-3 p-2"><img style="width:100%;object-fit:cover;height:100%;border:1px solid white" src="\@image.imageUrl" /></div>
+					}
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<h4>@Model.ProductsWP.Product.ProductName</h4>
+				<h7>@Model.ProductsWP.Product.Price.ToString("N0") Ft</h7>
+				<h7>@Model.ProductsWP.Product.ProductType</h7>
+				<hr />
+				
+				<div>@Html.Raw(Model.ProductsWP.Product.Description)</div>
+			</div>
+
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="card-header bg-dark">Add to cart</div>
+					<div class="card-body">
+						<form method="post">
+
+							<p><h7>@Model.ProductsWP.Product.Price.ToString("N0") Ft</h7></p>
+							<p><h7>Available Count: @Model.ProductsWP.Product.SumCount</h7></p>
+							@if(Model.ProductsWP.Product.SumCount < 1)
+							{
+								<button class="btn btn-danger" disabled>SOLD OUT</button>
+							}
+							else{
+								<button type="submit" class="btn btn-success w-100" asp-page="/Cart/Index" asp-route-productId="@Model.ProductsWP.Product.Id">ADD TO CART</button>
+							}
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

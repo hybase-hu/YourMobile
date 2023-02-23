@@ -1,0 +1,30 @@
+﻿@page
+@model YourMobile.Pages.Order.SuccessModel
+@{
+	ViewData["Title"] = "Success Order";
+}
+
+<div class="card"">
+	<div class="card-header">Success Orders</div>
+	<div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">To</th>
+          <th scope="col">Session ID</th>
+          <th scope="col">Transaction ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="table-active">
+            <td>@Model.OrderHeader.CreatedDate</td>
+            <td>@Model.OrderHeader.City - @Model.OrderHeader.Country ,@Model.OrderHeader.Street @Model.OrderHeader.HouseNumber</td>
+            <td>@Model.OrderHeader.SessionId</td>
+            <td>@Model.OrderHeader.TransactionId</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-center">Product availabile to transit as soon as possible! Thank you</p>
+	</div>
+</div>

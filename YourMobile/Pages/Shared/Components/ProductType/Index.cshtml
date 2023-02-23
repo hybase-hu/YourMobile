@@ -1,0 +1,9 @@
+﻿@model List<YourMobile.Models.ProductType>
+<ul class="navbar-nav">
+    <li class="nav-item sidebar"><a class="nav-link sidebar_link" 
+        asp-page="/Home/Index" asp-route-productTypeId="0">ALL</a></li>
+    @foreach (var productType in Model) {
+    <li class="nav-item sidebar"><a class="nav-link sidebar_link" 
+        asp-page="/Home/Index" asp-route-productTypeId="@productType.Id">@productType.Name</a></li>
+    }
+</ul>

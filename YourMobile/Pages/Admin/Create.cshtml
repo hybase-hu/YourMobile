@@ -1,0 +1,74 @@
+﻿@page
+@model YourMobile.Pages.Admin.CreateModel
+@{
+	ViewData["Title"] = "Create new Product";
+}
+
+<div class="card text-light" style="max-width:50rem;margin:auto;">
+	<div class="card-header">Create new Product</div>
+	<div class="card-body">
+		<form method="post" enctype="multipart/form-data">
+
+			<!--FONTOS MERT KÜLÖNBEN ÚJ JÖN LÉTRE-->
+			<input type="hidden" asp-for="Product.Id" />
+
+
+			<label asp-for="@Model.Product.ProductName" class="my-2"></label>
+			<span class="text-dark badge bg-warning m-1" asp-validation-for="@Model.Product.ProductName"></span>
+			<input asp-for="@Model.Product.ProductName" placeholder="Product Name" class="form-control" />
+			
+
+
+			<label asp-for="@Model.Product.Manifacturer" class="my-2"></label>
+			<span class="text-dark badge bg-warning my-1" asp-validation-for="@Model.Product.Manifacturer"></span>
+			<input asp-for="@Model.Product.Manifacturer" placeholder="Manifacturer" class="form-control" />
+
+
+			<span class="text-dark badge bg-warning m-1"></span>
+			<input asp-for=FormFile AllowMultiple="true" type="file" multiple class="form-control my-3" />
+
+			<label asp-for="@Model.Product.Price" class="my-2"></label>
+			<span class="text-dark badge bg-warning m-1" asp-validation-for="@Model.Product.Price"></span>
+			<input asp-for="@Model.Product.Price" placeholder="Price" class="form-control" />
+
+
+			<label asp-for="@Model.Product.Description" class="my-2"></label>
+			<span class="text-dark badge bg-warning m-1" asp-validation-for="@Model.Product.Description"></span>
+			<textarea asp-for="@Model.Product.Description" placeholder="Product Description" class="form-control"></textarea>
+
+
+			<label asp-for="@Model.Product.ProductTypeId" class="my-2"></label>
+			<span class="text-dark badge bg-warning m-1" asp-validation-for="@Model.Product.ProductTypeId"></span>
+			<select asp-for="Product.ProductTypeId" asp-items="Model.ProductTypeList" class="form-select ">
+				<option disabled selected>-Select Product Type-</option>
+			</select>
+
+			@if (Model.Product.Id == 0)
+			{
+				<button type="submit" class="btn btn-primary w-100 my-2">SAVE</button>
+			}
+			else
+			{
+				<button type="submit" class="btn btn-primary w-100 my-2">EDIT</button>
+			}
+		</form>
+	</div>
+</div>
+
+
+@section Scripts {
+	<script>
+		tinymce.init({
+			selector: 'textarea',
+			plugins: 'anchor autolink charmap codesample emoticons  lists  visualblocks wordcount',
+			toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+			tinycomments_mode: 'embedded',
+			tinycomments_author: 'Your Mobile Shop',
+		});
+	</script>
+
+
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

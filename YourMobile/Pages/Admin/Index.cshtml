@@ -1,0 +1,39 @@
+﻿@page
+@model YourMobile.Pages.Admin.IndexModel
+@{
+	ViewData["Title"] = "Product List (admin)";
+}
+
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Product Name</th>
+			<th>Product Manufacturer</th>
+			<th>Product Count</th>
+			<th>Product Price</th>
+			<th>Managed</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@foreach (var product in Model.ProductList)
+		{
+			<tr>
+				<td>@product.ProductName</td>
+				<td>@product.Manifacturer</td>
+				<td>@product.SumCount</td>
+				<td>@product.Price.ToString("N0") FT</td>
+				<td>
+					<div class="input-group">
+						<form method="post">
+							<button type="submit"  class="btn btn-danger" asp-page-handler="Delete" asp-route-productId="@product.Id">DELETE</button>
+						</form>
+						<a asp-page="/Admin/Create" asp-route-productId="@product.Id" class="btn btn-warning">EDIT</a>
+					</div>
+				</td>
+			</tr>
+		}
+		
+	</tbody>
+</table>

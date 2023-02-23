@@ -1,0 +1,90 @@
+﻿@page
+@using Microsoft.Extensions.Options;
+@model YourMobile.Pages.Order.IndexModel
+
+@inject IOptions<YourMobile.DataAccess.Utility.StripePaymentSettings> Stripe
+
+
+@using static YourMobile.DataAccess.Constants.Price
+
+
+
+@{
+	ViewData["Title"] = "Finish Orders";
+}
+<div class="card">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-lg">
+				<form method="post">
+
+					<input type="hidden" value="@Model.OrderHeader.Id" />
+
+
+					@if (Model.StatusMessage != null)
+					{
+						<div class="alert alert-warning">@Model.StatusMessage</div>
+					}
+
+					<label asp-for="@Model.OrderHeader.PhoneNumber"></label>
+					<span asp-validation-for="@Model.OrderHeader.PhoneNumber" class="badge bg-warning"></span> 
+					<input asp-for="@Model.OrderHeader.PhoneNumber" class="form-control" />
+
+					<label asp-for="@Model.OrderHeader.City"></label>
+					<span asp-validation-for="@Model.OrderHeader.City" class="badge bg-warning"></span>
+					<input asp-for="@Model.OrderHeader.City" class="form-control " />
+
+
+					<label asp-for="@Model.OrderHeader.Country"></label>
+					<span asp-validation-for="@Model.OrderHeader.Country" class="badge bg-warning"></span>
+					<input asp-for="@Model.OrderHeader.Country" class="form-control " />
+
+
+					<label asp-for="@Model.OrderHeader.Street"></label>
+					<span asp-validation-for="@Model.OrderHeader.Street" class="badge bg-warning"></span>
+					<input asp-for="@Model.OrderHeader.Street" class="form-control " />
+
+
+					<label asp-for="@Model.OrderHeader.PostCode"></label>
+					<span asp-validation-for="@Model.OrderHeader.PostCode" class="badge bg-warning"></span>
+					<input asp-for="@Model.OrderHeader.PostCode" class="form-control " />
+
+					<label asp-for="@Model.OrderHeader.HouseNumber"></label>
+					<span asp-validation-for="@Model.OrderHeader.HouseNumber" class="badge bg-warning"></span>
+					<input asp-for="@Model.OrderHeader.HouseNumber" class="form-control " />
+
+					<input type="submit" class="btn btn-success w-100 my-2" asp-page-handler="Save" />
+
+				</form>
+			</div>
+			<div class="col-lg">
+				<div class="card">
+					<div class="card-header bg-active">Order Summary</div>
+					<div class="card-body">
+						<p>Total price (Netto): @Model.TotalPrice.ToString("N0") Ft</p>
+						<p>Total price (Brutto): @Model.TotalPriceWithVat.ToString("N0") Ft</p>
+						<p>Shipping: @ShippingFee.ToString("N0") FT</p>
+						
+					</div>
+					<div class="card-footer bg-dark">
+						<p>Full Total price: @Model.TotalPriceWithVatAndShipping.ToString("N0") Ft</p>
+					</div>
+				</div>
+				
+				
+			</div>
+		</div>
+
+		
+		
+
+	</div>
+</div>
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+		<script src="https://js.stripe.com/v3/"></script>
+
+	}
+}

@@ -1,0 +1,43 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    background: rgb(25,12,24);
+    background-image: url('/img/page/bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(17px);
+    -webkit-backdrop-filter: blur(17px);
+    background-attachment: fixed;
+    min-height: 80vh;
+}
+
+.border-round {
+    border:1px solid #22888888;
+    border-radius:5px;
+}
+
+.main {
+
+}
+
+.sidebar_link:hover {
+    border-left:0.5rem solid #ffd800;
+    padding-left:1rem;
+}

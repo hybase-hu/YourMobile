@@ -1,0 +1,46 @@
+﻿@page
+@model YourMobile.Pages.Cart.IndexModel
+@{
+	ViewData["Title"] = "Your CartItems items";
+}
+
+
+<div class="card">
+	<div class="card-body">
+		@if (Model.CartItems == null)
+		{
+			<p>Not found product in cart</p>
+		}
+		else
+		{
+			<div>
+				<p class="text-center p-4 border-round" >
+					We are sorry, as the developer did not want to create a database containing the 
+					quantity of products for the Basket, so only one product can be ordered. However, 
+					you can add the same product several times. Thank you for your understanding. 
+				</p>
+			</div>
+			@if (Model.StatusMessage != null)
+			{
+				<div class="alert alert-warning">@Model.StatusMessage</div>
+			}
+			@foreach (var product in Model.ProductWP)
+			{
+			<div class="row py-2">
+				<div class="col-lg-3"><img style="max-width:100%;object-fit:cover;" src="\@product.Photos.First().imageUrl" /></div>
+				<div class="col-lg-3">@product.Product.ProductName</div>
+				<div class="col-lg-3">@product.Product.Price.ToString("N0") FT</div>
+				<div class="col-lg-3 ">
+					<form method="post">
+						<button type="submit" class="btn btn-danger" asp-page-handler="DeleteProductFromCart" asp-route-productId="@product.Product.Id">Delete</button>
+					</form>
+				</div>
+			</div>
+			}
+			<div>
+				<a asp-page="/Order/Index" class="btn btn-primary w-100">GO TO ORDER</a>
+			</div>
+
+		}
+	</div>
+</div>

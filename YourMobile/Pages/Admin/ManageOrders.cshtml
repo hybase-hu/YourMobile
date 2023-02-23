@@ -1,0 +1,78 @@
+﻿@page
+@model YourMobile.Pages.Admin.ManageOrdersModel
+@using YourMobile.DataAccess.Constants;
+@{
+	ViewData["Title"] = "Manage Orders";
+}
+
+<div class="card">
+	<div class="card-body">
+		@foreach (var order in Model.OrderDataList) {
+				<div class="row">
+					<div class="col-lg">
+						<div class="card">
+							<div class="card-body text-dark">
+								<p>Created At: @order.Header.CreatedDate</p>
+								<p>Order Status: @order.Header.Status</p>
+								<p>Order Mobile: @order.Header.PhoneNumber</p>
+								<p>City: @order.Header.City</p>
+								<p>Transaction ID: @order.Header.TransactionId</p>
+								<p>TotalPrice: @order.Header.TotalPrice.ToString("N0") FT</p>
+								<p>Products Count: @order.OrderDetailsList.Count</p>
+							</div>
+						</div><!--Card -->
+						<div class="py-2 btn-group w-100">
+							<form method="post">
+							<button type="submit" class="btn btn-success" asp-page-handler="StatusUpdate" 
+								disabled="@(order.Header.Status == OrderStatus.OrderDeliveryPrepared ? "" : null)"
+								asp-route-status="@OrderStatus.OrderAccept" asp-route-orderHeaderId="@order.Header.Id">Order Accept</button>
+							
+								
+							<button type="submit" class="btn btn-warning" asp-page-handler="StatusUpdate"
+								disabled="@(order.Header.Status != OrderStatus.OrderAccept ? "" : null)"
+								asp-route-status="@OrderStatus.OrderDeliveryPrepared" asp-route-orderHeaderId="@order.Header.Id">Order Sends</button>
+							
+								
+							<button type="submit" class="btn btn-danger" asp-page-handler="StatusUpdate"
+								disabled="@(order.Header.Status == OrderStatus.OrderDeliveryPrepared ? "" : null)"
+								asp-route-status="@OrderStatus.OrderRejects" asp-route-orderHeaderId="@order.Header.Id">Order Rejects</button>
+							
+								
+							<button type="submit" class="btn btn-danger" asp-page-handler="StatusUpdate"
+								disabled="@(order.Header.Status == OrderStatus.OrderDeliveryPrepared ? "" : null)"
+								asp-route-status="@OrderStatus.OrderCanceled" asp-route-orderHeaderId="@order.Header.Id">Order Cancel</button>
+							</form>
+						</div>
+					</div><!--Card col-->
+
+					<div class="col-lg">
+						@foreach (var productWP in order.ProductWithPhotoList) {
+							<div class="row">
+								<div class="col-md" >
+									@if (@productWP.Photos.First() != null) {
+										<img style="width:100%;object-fit:contain" src="/@productWP.Photos.First().imageUrl" />
+									}
+									else
+									{
+										<img style=" width:100%;object-fit:contain src="~/img/page/no-image.png" />
+									}
+								</div>
+								<div class="col-lg">
+									<div class="col-md"><span class="badge bg-dark text-light">@productWP.Product.ProductName</span></div>
+									<div class="col-md"><span class="badge bg-dark text-light">@productWP.Product.Price.ToString("N0") FT</span></div>
+								</div>
+								<div class="col-lg">
+									<div class="col-md"><span class="badge bg-dark text-light">@productWP.Product.Manifacturer</span></div>
+									<div class="col-md"><span class="badge bg-dark text-light">@productWP.Product.ProductTypeId</span></div>
+								</div>
+							</div><!--ROW-->
+							<hr>
+						}
+						
+					</div><!--COL LG-->
+			</div><!--ROW-->
+			<hr />
+
+		}
+	</div>
+</div>
